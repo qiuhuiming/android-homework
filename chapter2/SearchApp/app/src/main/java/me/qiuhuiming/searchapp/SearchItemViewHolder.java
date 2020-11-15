@@ -7,10 +7,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
-import static android.content.ContentValues.TAG;
-
 public class SearchItemViewHolder extends RecyclerView.ViewHolder {
 
     TextView textView;
@@ -22,6 +18,6 @@ public class SearchItemViewHolder extends RecyclerView.ViewHolder {
 
     public void setItemText(String text) {
         this.textView.setText(text);
-        Log.d(TAG, "setItemText: " + this.textView.getText());
+        Log.d("SearchItemViewHolder", "setItemText: " + this.textView.getText());
     }
 }

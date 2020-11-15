@@ -46,5 +46,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchItemViewHolder> {
         this.itemList.clear();
         this.itemList.addAll(itemList);
         Log.d("SearchListAdapter", "setItemList: " + this.itemList);
+        notifyDataSetChanged();
     }
 }
