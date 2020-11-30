@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
 
     private final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://api-sjtu-camp.bytedance.com/")
+            .baseUrl("https://api-sjtu-camp.bytedance.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     private final UploadService uploadService = retrofit.create(UploadService.class);
@@ -56,10 +56,16 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<UploadResponse> call, Response<UploadResponse> response) {
                         Log.d(TAG, "onResponse: received");
+                        if (! response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: response failed");
+                            return;
+                        }
+                        Log.d(TAG, "response: " + response);
                     }
 
                     @Override
                     public void onFailure(Call<UploadResponse> call, Throwable t) {
+                        Log.d(TAG, "onFailure: " + t);
                         Log.d(TAG, "onFailure: ");
                     }
                 });
