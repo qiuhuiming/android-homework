@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import icu.sjtu.network.model.GetVideoResponse;
 import icu.sjtu.network.model.UploadResponse;
 import icu.sjtu.network.service.UploadService;
 import icu.sjtu.network.util.MyPartBuilder;
@@ -31,9 +32,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 点击Upload按钮
         findViewById(R.id.uploadButton).setOnClickListener(v -> {
-            Log.d(TAG, "onCreate: click button");
+            Log.d(TAG, "onCreate: click upload button");
             uploadFile();
+        });
+
+        // 点击Get按钮
+        findViewById(R.id.getButton).setOnClickListener(v -> {
+            Log.d(TAG, "onCreate: click get button");
+            getVideoList();
         });
     }
 
@@ -60,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, "onResponse: response failed");
                             return;
                         }
-                        Log.d(TAG, "response: " + response);
+                        Log.d(TAG, "response: " + response.body());
                     }
 
                     @Override
@@ -71,5 +79,19 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    private void getVideoList() {
+        uploadService.getVideoList().enqueue(new Callback<GetVideoResponse>() {
+            @Override
+            public void onResponse(Call<GetVideoResponse> call, Response<GetVideoResponse> response) {
+                Log.d(TAG, "onResponse: received");
+                Log.d(TAG, "onResponse: " + response.body());
+            }
+
+            @Override
+            public void onFailure(Call<GetVideoResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
 
 }
